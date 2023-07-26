@@ -18,11 +18,18 @@ const Create = () => {
   const date = new Date()
 
   const handleSubmit = () =>{
-    firebase.storage().ref(`/image/${image.product}`).put(image).then(({ref})=>{
+
+    if (!product || !category || !price || !image) {
+      alert('Please fill in all the required fields.');
+      return;
+    }
+    // Generate a unique name for the image file
+    const imageName = `${Date.now()}_${image.name}`;
+    firebase.storage().ref(`/image/${imageName}`).put(image).then(({ref})=>{
       ref.getDownloadURL().then((url)=>{
         console.log(url);
         firebase.firestore().collection('products').add({
-          product,
+          product,  
           category,
           price,
           url,
@@ -49,6 +56,7 @@ const Create = () => {
               onChange={(e)=>{
                 setProduct(e.target.value)
               }}
+              required
             />
             <br />
             <label htmlFor="fname">Category :</label>
@@ -61,6 +69,7 @@ const Create = () => {
               onChange={(e)=>{
                 setCategory(e.target.value)
               }}
+              required
             />
             <br />
             <label htmlFor="fname">Price :</label>
@@ -73,6 +82,7 @@ const Create = () => {
             onChange={(e)=>{
               setPrice(e.target.value)
             }} 
+            required
             />
             <br />
           <br />
@@ -83,6 +93,7 @@ const Create = () => {
             onChange={(e)=>{
               setImage(e.target.files[0])
             }}
+            required
             />
             <br />
             <button onClick={handleSubmit} className="uploadBtn">upload and Submit</button>

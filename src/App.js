@@ -17,7 +17,7 @@ function App() {
     firebase.auth().onAuthStateChanged((user) => {
       setUser(user);
     });
-  },[]); // Adding an empty dependency array ensures useEffect runs only once on component mount
+  },[]);
 
   return (
     <div>

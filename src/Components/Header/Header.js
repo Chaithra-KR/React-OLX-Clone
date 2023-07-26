@@ -56,16 +56,31 @@ function Header() {
           </span>
         </div>
 
-        <div className="sellMenu">
-        <Link to="/create">
+        { user ?
+          (
+           <div className="sellMenu">
+           <Link to="/create">
+             <SellButton></SellButton>
+             <div className="sellMenuContent">
+               <SellButtonPlus></SellButtonPlus>
+               <span>SELL</span>
+             </div>
+             </Link>
+           </div>
+          ):(
+            <div className="sellMenu">
+            <Link to="/login">
+              <SellButton></SellButton>
+              <div className="sellMenuContent">
+                <SellButtonPlus></SellButtonPlus>
+                <span>SELL</span>
+              </div>
+              </Link>
+            </div>
+          )
+        }
+       
 
-          <SellButton></SellButton>
-          <div className="sellMenuContent">
-            <SellButtonPlus></SellButtonPlus>
-            <span>SELL</span>
-          </div>
-          </Link>
-        </div>
       </div>
     </div>
   );
